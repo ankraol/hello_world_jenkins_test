@@ -10,15 +10,11 @@ pipeline {
     agent any
 
     stages {
-        // stage('Cloning our Git') {
-        //     steps {
-        //         echo 'Cloning from GitHub...'
-        //         git 'https://github.com/ankraol/hello_world_jenkins_test.git'
-        //     }
-        // }
-        stage('Initialize'){
-            def dockerHome = tool 'myDocker'
-            env.PATH = "${dockerHome}/bin:${env.PATH}"
+        stage('Initialize') {
+            steps {
+                def dockerHome = tool 'myDocker'
+                env.PATH = "${dockerHome}/bin:${env.PATH}"
+            }
         }
         stage('Building image') {
             steps {
