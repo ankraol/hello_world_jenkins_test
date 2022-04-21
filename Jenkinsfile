@@ -1,20 +1,37 @@
 pipeline {
   agent any
   tools {
-    // a bit ugly because there is no `@Symbol` annotation for the DockerTool
-    // see the discussion about this in PR 77 and PR 52: 
-    // https://github.com/jenkinsci/docker-commons-plugin/pull/77#discussion_r280910822
-    // https://github.com/jenkinsci/docker-commons-plugin/pull/52
     'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
   }
   environment {
     DOCKER_CERT_PATH = credentials('dockerhub_id')
+    registry = "krasoana/hello_world" 
+    dockerImage = '' 
   }
   stages {
     stage('foo') {
       steps {
         sh "docker version" // DOCKER_CERT_PATH is automatically picked up by the Docker client
       }
+    }
+    stage('Build image') {
+        steps {
+            echo 'Building image...'
+            script {
+                dockerImage = docker.build registry + ":$BUILD_NUMBER"
+            }
+        }
+    }
+    stage('Push image') {
+        docker.withRegistry('', 'dockerhub_id') {
+            dockerImage.push()
+        }
+    }
+    stage('Cleaning up') {
+        steps {
+            echo 'Cleaning up...'
+            sh "docker rmi $registry:$BUILD_NUMBER"
+        }
     }
   }
 }
