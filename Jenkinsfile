@@ -19,11 +19,12 @@ pipeline {
     }
     stage('Push image') {
         steps{
-            script {
-                docker.withRegistry(registry, 'dockerhub_id') {
-                    dockerImage.push()
-                }
-            }
+            // script {
+            //     docker.withRegistry(registry, 'dockerhub_id') {
+            //         dockerImage.push()
+            //     }
+            // }
+            sh 'docker push $registry:latest'
         }
     }
     stage('Cleaning up') {
