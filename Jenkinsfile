@@ -10,12 +10,12 @@ pipeline {
     agent any
 
     stages {
-        stage('Cloning our Git') {
-            steps {
-                echo 'Cloning from GitHub...'
-                git 'https://github.com/ankraol/hello_world_jenkins_test.git'
-            }
-        }
+        // stage('Cloning our Git') {
+        //     steps {
+        //         echo 'Cloning from GitHub...'
+        //         git 'https://github.com/ankraol/hello_world_jenkins_test.git'
+        //     }
+        // }
         stage('Building image') {
             steps {
                 echo 'Building image...'
