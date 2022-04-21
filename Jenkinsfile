@@ -24,7 +24,7 @@ pipeline {
             //         dockerImage.push()
             //     }
             // }
-            sh 'docker push $registry:latest'
+            sh 'docker push $registry:$BUILD_NUMBER'
         }
     }
     stage('Cleaning up') {
