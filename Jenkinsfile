@@ -25,7 +25,7 @@ pipeline {
     stage('Push image') {
         steps{
             script {
-                docker.withRegistry('', DOCKER_CERT_PATH) {
+                docker.withRegistry('', 'dockerhub_id') {
                     dockerImage.push()
                 }
             }
