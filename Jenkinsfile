@@ -23,8 +23,12 @@ pipeline {
         }
     }
     stage('Push image') {
-        docker.withRegistry('', 'dockerhub_id') {
-            dockerImage.push()
+        steps{
+            script {
+                docker.withRegistry('', 'dockerhub_id') {
+                    dockerImage.push()
+                }
+            }
         }
     }
     stage('Cleaning up') {
