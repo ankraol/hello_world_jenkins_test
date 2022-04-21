@@ -9,11 +9,6 @@ pipeline {
     dockerImage = '' 
   }
   stages {
-    stage('foo') {
-      steps {
-        sh "docker version" // DOCKER_CERT_PATH is automatically picked up by the Docker client
-      }
-    }
     stage('Build image') {
         steps {
             echo 'Building image...'
@@ -25,7 +20,7 @@ pipeline {
     stage('Push image') {
         steps{
             script {
-                docker.withRegistry('', 'dockerhub_id') {
+                docker.withRegistry(registry, 'dockerhub_id') {
                     dockerImage.push()
                 }
             }
