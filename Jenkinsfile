@@ -20,9 +20,12 @@ pipeline {
     stage('Push image') {
         steps{
             script {
+                withDockerRegistry([ credentialsId: "dockerhub_id", url: "" ]) {
             //     docker.withRegistry(registry, 'dockerhub_id') {
-                    dockerImage.push()
+                    // dockerImage.push()
+                    sh 'docker push $registry:$BUILD_NUMBER'
             //     }
+                }
             }
             // sh 'docker push $registry:$BUILD_NUMBER'
         }
